@@ -1,6 +1,7 @@
 from api import Resource, reqparse, db
 from api.models.author import AuthorModel
 from api.models.quote import QuoteModel
+from api.schemas.quote import quote_schema, quotes_schema
 
 
 class QuoteResource(Resource):
@@ -21,7 +22,7 @@ class QuoteResource(Resource):
 
         quote = QuoteModel.query.get(quote_id)
         if quote is not None:
-            return quote.to_dict(), 200
+            return quote_schema.dump(quote), 200
         return {"Error": "Quote not found"}, 404
 
     def post(self, author_id):
